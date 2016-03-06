@@ -57,7 +57,6 @@ print("Additional d quark %f GeV thats %.1f percent change" % (Z + quark_d_s_b, 
 
 
 
-
 # forward-back asymmetry
 
 def forward_backward(w_sin_2_value, s):
@@ -98,12 +97,9 @@ s = 91.225**2
 #s = 89.225**2
 #s = 93.225**2
 
-s_range = np.arange(85, 100, 0.1)
-w_range = np.arange(0.2, 0.25, 0.0001)
-print((s_range[0]+0.225, w_range[-1]))
-print((s_range[-1]+0.225, w_range[0]))
+s_range = np.arange(93, 93.5, 0.225)
+w_range = np.arange(0.20, 0.26, 0.01)
 
-print((len(w_range),len(s_range)))
 
 result = np.zeros((len(w_range), len(s_range)), dtype=np.float32)
 for i, sqrt_s in enumerate(s_range):
