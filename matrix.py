@@ -90,9 +90,25 @@ for i in range(0,7):
 print('dsigma')
 print(np_array_to_latex(dsigma,4))
 
-"""
-differential cross-setion
-"""
+
+
+sigma_lept = np.zeros((7,2))
+for i in range(7):
+    sigma_lept[i][0] = sigma[i][0] + sigma[i][1] + sigma[i][2]
+    sigma_lept[i][1] = sigma[i][3]
+
+print("sigma leptons sum")
+print(np_array_to_latex(sigma_lept,4))
+
+
+dsigma_lept = np.zeros((7,2))
+for i in range(7):
+    dsigma_lept[i][0] = np.sqrt(dsigma[i][0]**2 + dsigma[i][1]**2 + dsigma[i][2]**2)
+    dsigma_lept[i][1] = dsigma[i][3]
+
+print("dsigma leptons sum")
+print(np_array_to_latex(dsigma_lept,4))
+
 
 
 
