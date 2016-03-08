@@ -1,0 +1,9 @@
+[0] Config.pm:318> INFO - This is Biber 1.8
+[0] Config.pm:321> INFO - Logfile is '/Users/keksnicoh/unih/Z0-Decay-experiment/.texpadtmp/Protokoll.blg'
+[57] biber-darwin:275> INFO - === Tue Mar  8, 2016, 13:03:11
+[57] Biber.pm:333> INFO - Reading '/Users/keksnicoh/unih/Z0-Decay-experiment/.texpadtmp/Protokoll.bcf'
+[117] Biber.pm:607> INFO - Using all citekeys in bib section 0
+[137] Biber.pm:3053> INFO - Processing section 0
+[154] Biber.pm:3190> INFO - Looking for bibtex format file 'literatur.bib' for section 0
+[154] Utils.pm:185> ERROR - Can't read literatur.bib
+[154] Biber.pm:109> INFO - ERRORS: 1
