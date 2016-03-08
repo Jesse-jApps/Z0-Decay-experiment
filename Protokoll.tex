@@ -347,16 +347,25 @@ And the following Luminosities given by table 5.6:
    7.097\cdot 10^{+02} \\
 \end{pmatrix}
 \end{equation}
-We calculate the crossection for each element $\sigma_{ij} = N_{true,ij}/(\mathcal{L}dt)_i+\Lambda_{ij}$:
+Also we include monte carlo correction factor
+\begin{equation}
+\mathcal{M} = \begin{pmatrix}
+  4.0961279303 \\
+  1.060006996 \\
+  1.2627697592 \\
+  1.0152181196
+\end{pmatrix}
+\end{equation}
+So calculate the crossection for each element $\sigma_{ij} = \mathcal{M}_{j}N_{true,ij}/(\mathcal{L}dt)_i+\Lambda_{ij}$:
 \begin{equation}
 \sigma = \begin{pmatrix}
-   1.33105\cdot 10^{-01} & 2.9044\cdot 10^{-01} & 2.99061\cdot 10^{-01} & 7.38817 \\
-   3.21344\cdot 10^{-01} & 6.22457\cdot 10^{-01} & 5.98488\cdot 10^{-01} & 1.42622\cdot 10^{+01} \\
-   5.46949\cdot 10^{-01} & 1.15915 & 1.06876 & 2.57169\cdot 10^{+01} \\
-   8.00873\cdot 10^{-01} & 1.80151 & 1.58741 & 4.05623\cdot 10^{+01} \\
-   4.32723\cdot 10^{-01} & 1.29668 & 1.12314 & 2.89486\cdot 10^{+01} \\
-   7.21127\cdot 10^{-02} & 5.73666\cdot 10^{-01} & 5.47035\cdot 10^{-01} & 1.36859\cdot 10^{+01} \\
-   -1.0932\cdot 10^{-03} & 3.31443\cdot 10^{-01} & 2.79308\cdot 10^{-01} & 8.23799 \\
+   2.66565\cdot 10^{-01} & 3.02468\cdot 10^{-01} & 3.53996\cdot 10^{-01} & 7.47017 \\
+   6.97041\cdot 10^{-01} & 6.47807\cdot 10^{-01} & 7.03198\cdot 10^{-01} & 1.44138\cdot 10^{+01} \\
+   1.12577 & 1.20711 & 1.255 & 2.59911\cdot 10^{+01} \\
+   1.67049 & 1.87841 & 1.86789 & 4.10152\cdot 10^{+01} \\
+   1.09134 & 1.36129 & 1.36046 & 2.93176\cdot 10^{+01} \\
+   3.26344\cdot 10^{-01} & 6.0869\cdot 10^{-01} & 6.93407\cdot 10^{-01} & 1.38972\cdot 10^{+01} \\
+   2.43212\cdot 10^{-01} & 3.56132\cdot 10^{-01} & 3.73723\cdot 10^{-01} & 8.3877 \\
 \end{pmatrix}
 \end{equation}
 The error of cross section in eq (\ref{eq:cs}) is given by
