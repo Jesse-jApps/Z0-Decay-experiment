@@ -46,6 +46,16 @@ e[3] = [631,2879,2398,66863]
 e[4] = [114,577,484,12995]
 e[5] = [37,263,251,6257]
 e[6] = [56,292,255,6982]
+
+#corrected
+#e[0] = [70,93,97,2500]
+#e[1] = [192,282,266,6650]
+#e[2] = [444,389,345,8770]
+#e[3] = [755,2879,2398,66863]
+#e[4] = [789,577,484,12995]
+#e[5] = [170,263,251,6257]
+#e[6] = [93,292,255,6982]
+
 print('data from experiment')
 print(np_array_to_latex(e,0))
 
@@ -77,7 +87,15 @@ print(np_array_to_latex(lumi,4))
 print('ERROR')
 print(np_array_to_latex(lumi_errs))
 lumis = np.array([a*4 for a in lumi], dtype=np.float32)
-sigma = e/lumis+fixes
+
+
+monte_carlo_corrections = [
+    [4.0961279303,    1.060006996, 1.2627697592,    1.0152181196] for x in range(7)
+]
+#sigma = e/lumis+fixes
+
+#monto carlo correction
+sigma = (monte_carlo_corrections*e)/lumis+fixes
 print('sigma')
 print(sigma)
 print(np_array_to_latex(sigma,5))
@@ -88,6 +106,7 @@ for i in range(0,7):
         dsigma[i][j] = np.sqrt((1.0/lumi[i][0]*dntrue[i][j])**2+(-ntrue[i][j]/(lumi[i][0])**2*lumi_errs[i][0])**2)
 
 print('dsigma')
+print(dsigma)
 print(np_array_to_latex(dsigma,4))
 
 
@@ -108,6 +127,14 @@ for i in range(7):
 
 print("dsigma leptons sum")
 print(np_array_to_latex(dsigma_lept,4))
+
+
+
+"""
+determine partial width
+"""
+def p_width(peak, gz, ge, mz):
+    return (peak*gz**2*mz**2)/(12*np.pi*ge)
 
 
 
