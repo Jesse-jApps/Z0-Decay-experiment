@@ -86,21 +86,6 @@ Ecal(SumE): Energy in electronic-kalorimeter
 \newline
 Hcal(SumE): Energy in hadronic-kalorimeter
 
-\begin{tabular}{ |p{1cm}||p{2cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|  }
- \hline
- \multicolumn{6}{|c|}{Quantities} \\
- \hline
- Run & Event & Ctrk(Sump) & Ctrk(N) & Ecal(SumE) & Hcal(SumE) \\
- \hline
- 00 & ELECTRONS   & AF    &AFG&   004 & 00\\
- 00 & MUONS & AF    &AFG&   004 & 00\\
- 00 & TAUS & AF    &AFG&   004 & 00\\
- 00 & HADRONS    & AF    &AFG&   004 & 00\\
- \hline
-\end{tabular}
-
-\section {Statistical analysis of $Z^0$ decay channels}
-
 \subsection{Decay width and cross-section}
 Using equation (2.12) we calculate following decay width of the Z-boson into fermions and (2.14) for cross-section at peak.
 
@@ -200,54 +185,66 @@ For the $e^+, e^-$ detection we have to apply a cut for the $-0.71 \leq \cos(\th
 \end{itemize}
 
 \subsubsection{Z->$\tau^+, \tau^-$}
-asd
 
 \subsection{Seperating t-channel for $e^+ e^-$}
-We are looking for a cut to remove all t-channel events. Therefore we define
+We want to find $\cos\theta$ so that we filter many t-channel events:
 \begin{equation}
 \frac{T}{T+S} \leq 0.05
+\label{eq:cond}
 \end{equation}
-where  $T=a(1-\cos{\theta})^{-2}$  and $S=b(1+\cos^2{\theta})$. And write
-
-
+where  $T=a(1-\cos{\theta})^{-2}$  and $S=b(1+\cos^2{\theta})$. 
+The differential crossection is then
 \begin{equation}
 \frac{dN}{d\cos\theta} = \frac{a}{(1-\cos\theta)^2}+b(1+\cos^2\theta)
 \end{equation}
-Integrate $\cos\theta$
+where we integrate over $\cos\theta$.
 \begin{equation}
 \int dN = \frac{a}{1-\cos\theta} + b\left(\cos\theta+\frac{1}{3}\cos^3\theta\right)
 \end{equation}
-We obtain detector errors outside $cos\theta \in [-0.7,0.7]$. To solve the equation for a and b we create 2 equations by split around $\cos\theta=0$.
+We obtain detector errors outside $cos\theta \in [-0.7,0.7]$. Therefore the integration is performed only on that interval. Since we have two unkowns in the equation we split the integral into two integrals to get two linear equation:
 \begin{equation}
 \begin{split}
-11786 &= a(\frac{1}{1-0.7}-1)+b(0,7+\frac{1}{3}0.7^3) \\
-9620 &= a(1-\frac{1}{1+0.7})+b(0,7+\frac{1}{3}0.7^3) \\
+11786 &= a(\frac{1}{1-0.7}-1)+b(0,7+\frac{1}{3}0.7^3) =  (2+\frac{1}{3})a+0,813433b\\
+9620 &= a(1-\frac{1}{1+0.7})+b(0,7+\frac{1}{3}0.7^3) = 0,4117647a+ 0,813433b\\
 \end{split}
 \end{equation}
-So we get
-\begin{equation}
-\begin{split}
-11786 &= (2+\frac{1}{3})a+0,813433b \\
-9620 &= 0,4117647a+ 0,813433b \\
-\end{split}
-\end{equation}
-So $a=1127,2$ and $b=9155,857$.
-We want $\frac{T}{T+S} \leq 0.05$ so we need to solve 
-\begin{equation}
-\frac{a}{(1-\cos\theta)^2}\frac{1}{\frac{a}{(1-\cos\theta)^2}+b(1+\cos^2\theta))} \leq 0.05 \iff \cos\theta \leq -0.188342
-\end{equation}
-
-To get true number of s-channel events we now integrate over the whole interval 
+With the power of basic linear algebra we get $a=1127,2$ and $b=9155,857$.
+We can now compute the True number of events in s-channel:
 \begin{equation}
 N_s = b\int_{-1}^1 d\cos\theta (1+\cos^2\theta) = \frac{8}{3}b = 24413
 \end{equation}
+Insert a and b into condition (\ref{eq:cond}) we get a upper boundary for $\cos\theta$
+\begin{equation}
+\frac{a}{(1-\cos\theta)^2}\frac{1}{\frac{a}{(1-\cos\theta)^2}+b(1+\cos^2\theta))} \leq 0.05 \iff \cos\theta \leq -0.188342
+\end{equation}
+Finally we will work with the following setup of cuts:
+\newline
+\begin{tabular}{ |p{3cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
+ \hline
+ CUT & e & $\tau$ & $\mu$ & q \\
+ \hline
+ ECAL lower & 85 & 0 & 8 & 15 \\
+ ECAL upper & 100 & 30 & 75 & x \\
+ HCAL lower & x & 0 & x & x \\
+ HCAL upper & x & 20 & x & x \\
+ PCHARGED lower & x & 70 & 8 & x \\
+ PCHARGED upper & x & x & 58 & x \\
+ N lower & x & x & 2 & 7 \\
+ N upper & x & 4 & 7 &x- \\
+ $\cos\theta_1$ lower & -0,7 & x & x & x \\
+ $\cos\theta_1$ upper & -0,188342 & x & x & x \\
+ $\cos\theta_2$ lower & x & x & x & x \\
+ $\cos\theta_2$ upper & x & x & x & x \\
+ \hline
+\end{tabular}
+\newpage
 
 \subsection{Create efficiency matrix}
-We create efficiency matrix where each element is given by 
+We create efficiency matrix $\epsilon$ where each element is defined as 
 \begin{equation}
 \epsilon = \frac{N_{cut}}{N_{true}}
 \end{equation}
-Thus performing the cuts to data set XX we could create the following matrix
+Thus apply the cuts which we found with help of monte carlo data on data-set 4 we find the following efficiency matrix.
 \begin{equation}
 \epsilon=\begin{pmatrix}
    2.86\cdot 10^{-01} & 1.0\cdot 10^{-05} & 0 & 0 \\
@@ -256,11 +253,7 @@ Thus performing the cuts to data set XX we could create the following matrix
    1.02\cdot 10^{-03} & 0 & 1.2\cdot 10^{-02} & 9.95\cdot 10^{-01} \\
 \end{pmatrix}
 \end{equation}
-To find filter background and find $N_{true}$ we need to solve the following equation
-\begin{equation}
-N_{obs} = \epsilon N_{true}
-\end{equation}
-Multiply left side with inverse efficiency matrix we get
+This allows us to filter background from data $N_{obs}$ so we get real events $N_{true}$
 \begin{equation}
 \epsilon^{-1} N_{obs} = N_{true}
 \end{equation}
@@ -272,6 +265,7 @@ with inverse efficiency matrix
    -1.33\cdot 10^{-02} & -1.25\cdot 10^{-02} & 1.26 & -5.13\cdot 10^{-03} \\
    -3.43\cdot 10^{-03} & 1.51\cdot 10^{-04} & -1.52\cdot 10^{-02} & 1.01 \\
 \end{pmatrix}
+\label{eq:eff-inv}
 \end{equation}
 The error of efficiency matrix is given by
 \begin{equation}
@@ -286,8 +280,8 @@ Using $\epsilon\Delta\epsilon^{-1}+\Delta\epsilon\epsilon^{-1}=0$ we get error f
    -6.42 \cdot 10^{-04} & 9.57 \cdot 10^{-06} & -4.77 \cdot 10^{-04} & -1.97 \cdot 10^{-04} \\
 \end{pmatrix}
 \end{equation}
-
-Apply the filters we used within monte carlo simulation we could find the total number of observed events for each $\sqrt{s} \in \{...\}$:
+\subsection{Dataset4}
+Apply the cuts we used within monte carlo simulation we could find the total number of observed events for each $\sqrt{s} \in \{88.47939, 89.46793, 90.22266, 91.22430, 91.96648, 92.96465, 93.71712\}$:
 \begin{equation}
 N_{obs}=\begin{pmatrix}
    2.0\cdot 10^{+01} & 9.0\cdot 10^{+01} & 1.0\cdot 10^{+02} & 2.0\cdot 10^{+03} \\
@@ -299,7 +293,8 @@ N_{obs}=\begin{pmatrix}
    6.0\cdot 10^{+01} & 3.0\cdot 10^{+02} & 3.0\cdot 10^{+02} & 7.0\cdot 10^{+03} \\
 \end{pmatrix}
 \end{equation}
-Thus we get using inverse efficiency matrix
+Where each roch represents one CMS-energy.
+Using the inverse efficiency matrix (\ref{eq:eff-inv}) we get true number of events
 \begin{equation}
 N_{true} = (\epsilon^{-1}N_{obs}^T)^T = \begin{pmatrix}
    6.995\cdot 10^{+01} & 1.006\cdot 10^{+02} & 1.08\cdot 10^{+02} & 2.512\cdot 10^{+03} \\
@@ -352,7 +347,7 @@ And the following Luminosities given by table 5.6:
    7.097\cdot 10^{+02} \\
 \end{pmatrix}
 \end{equation}
-We calculate the crossection for each element $\sigma_{ij} = N_{true,ij}/(\mathcal{L}dt)_i-\Lambda_{ij}$:
+We calculate the crossection for each element $\sigma_{ij} = N_{true,ij}/(\mathcal{L}dt)_i+\Lambda_{ij}$:
 \begin{equation}
 \sigma = \begin{pmatrix}
    1.33105\cdot 10^{-01} & 2.9044\cdot 10^{-01} & 2.99061\cdot 10^{-01} & 7.38817 \\
@@ -364,8 +359,7 @@ We calculate the crossection for each element $\sigma_{ij} = N_{true,ij}/(\mathc
    -1.0932\cdot 10^{-03} & 3.31443\cdot 10^{-01} & 2.79308\cdot 10^{-01} & 8.23799 \\
 \end{pmatrix}
 \end{equation}
-
-The error of crossection in eq (\ref{eq:cs}) is given by
+The error of cross section in eq (\ref{eq:cs}) is given by
 \begin{equation}
 \Delta\sigma = \sqrt{\left(\frac{\partial\sigma}{\partial N_{True}}\Delta N_{True}\right)^2+
 \left(\frac{\partial\sigma}{\partial (\mathcal{L}dt)}\Delta{\mathcal{L}dt}\right)^2} = \sqrt{\left(\frac{1}{\mathcal{L}dt}\Delta N_{True}\right)^2
@@ -395,7 +389,7 @@ Finally we get
    3.6702\cdot 10^{-03} & 3.8727\cdot 10^{-03} & 4.8643\cdot 10^{-03} & 8.506\cdot 10^{-02} \\
 \end{pmatrix}
 \end{equation}
-If we sum over the leptonic channels we get
+If we addup first three columns of the matrix we get:
 \begin{equation}
 \sigma=
 \begin{pmatrix}
@@ -421,7 +415,7 @@ with an error of
    1.2407\cdot 10^{-02} & 8.506\cdot 10^{-02} \\
 \end{pmatrix}
 \end{equation}
-
+Where we used that $\Delta\sum_i a_i=\sqrt{\sum a_i^2}$.
 
 \pagebreak
 \nocite{*}
