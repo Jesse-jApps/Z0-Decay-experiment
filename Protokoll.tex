@@ -323,6 +323,78 @@ with error of
    -1.987 & -3.866\cdot 10^{-01} & -2.463 & -1.531 \\
 \end{pmatrix}
 \end{equation}
+Next we calculate crossection by using equation (S-3.3):
+\begin{equation}
+\frac{dN}{dt} = \mathcal{L}\sigma
+\label{eq:cs}
+\end{equation}
+Using the following matrix for Strahlungskorrektur from table 5.5
+\begin{equation}
+\Lambda = \begin{pmatrix}
+   9.0\cdot 10^{-02} & 9.0\cdot 10^{-02} & 9.0\cdot 10^{-02} & 2.0 \\
+   2.0\cdot 10^{-01} & 2.0\cdot 10^{-01} & 2.0\cdot 10^{-01} & 4.3 \\
+   3.6\cdot 10^{-01} & 3.6\cdot 10^{-01} & 3.6\cdot 10^{-01} & 7.7 \\
+   5.2\cdot 10^{-01} & 5.2\cdot 10^{-01} & 5.2\cdot 10^{-01} & 1.08\cdot 10^{+01} \\
+   2.2\cdot 10^{-01} & 2.2\cdot 10^{-01} & 2.2\cdot 10^{-01} & 4.7 \\
+   -1.0\cdot 10^{-02} & -1.0\cdot 10^{-02} & -1.0\cdot 10^{-02} & -2.0\cdot 10^{-01} \\
+   -8.0\cdot 10^{-02} & -8.0\cdot 10^{-02} & -8.0\cdot 10^{-02} & -1.6 \\
+\end{pmatrix}
+\end{equation}
+And the following Luminosities given by table 5.6:
+\begin{equation}
+\mathcal{L}dt = \begin{pmatrix}
+   4.6398\cdot 10^{+02} \\
+   6.6752\cdot 10^{+02} \\
+   4.8676\cdot 10^{+02} \\
+   2.2466\cdot 10^{+03} \\
+   5.3591\cdot 10^{+02} \\
+   4.506\cdot 10^{+02} \\
+   7.097\cdot 10^{+02} \\
+\end{pmatrix}
+\end{equation}
+We calculate the crossection for each element $\sigma_{ij} = N_{true,ij}/(\mathcal{L}dt)_i-\Lambda_{ij}$:
+\begin{equation}
+\sigma = \begin{pmatrix}
+   1.33105\cdot 10^{-01} & 2.9044\cdot 10^{-01} & 2.99061\cdot 10^{-01} & 7.38817 \\
+   3.21344\cdot 10^{-01} & 6.22457\cdot 10^{-01} & 5.98488\cdot 10^{-01} & 1.42622\cdot 10^{+01} \\
+   5.46949\cdot 10^{-01} & 1.15915 & 1.06876 & 2.57169\cdot 10^{+01} \\
+   8.00873\cdot 10^{-01} & 1.80151 & 1.58741 & 4.05623\cdot 10^{+01} \\
+   4.32723\cdot 10^{-01} & 1.29668 & 1.12314 & 2.89486\cdot 10^{+01} \\
+   7.21127\cdot 10^{-02} & 5.73666\cdot 10^{-01} & 5.47035\cdot 10^{-01} & 1.36859\cdot 10^{+01} \\
+   -1.0932\cdot 10^{-03} & 3.31443\cdot 10^{-01} & 2.79308\cdot 10^{-01} & 8.23799 \\
+\end{pmatrix}
+\end{equation}
+
+The error of crossection in eq (\ref{eq:cs}) is given by
+\begin{equation}
+\Delta\sigma = \sqrt{\left(\frac{\partial\sigma}{\partial N_{True}}\Delta N_{True}\right)^2+
+\left(\frac{\partial\sigma}{\partial (\mathcal{L}dt)}\Delta{\mathcal{L}dt}\right)^2} = \sqrt{\left(\frac{1}{\mathcal{L}dt}\Delta N_{True}\right)^2
++\left(-\frac{N_{True}}{(\mathcal{L}dt)^2}\Delta\mathcal{L}dt\right)^2}
+\end{equation}
+Where the error of $\mathcal{L}dt$ is given by
+\begin{equation}
+\Delta\mathcal{L}dt = \pm \begin{pmatrix}
+   4.249604 \\
+   5.691792 \\
+   4.454466 \\
+   16.43293 \\
+   4.848926 \\
+   4.276552 \\
+   6.104764 \\
+\end{pmatrix} [nb^{-1}]
+\end{equation}
+Finally we get
+\begin{equation}
+\Delta\sigma=\begin{pmatrix}
+   2.0603\cdot 10^{-03} & 2.0057\cdot 10^{-03} & 2.8681\cdot 10^{-03} & 4.96\cdot 10^{-02} \\
+   5.6236\cdot 10^{-03} & 3.9419\cdot 10^{-03} & 5.2671\cdot 10^{-03} & 8.5376\cdot 10^{-02} \\
+   8.9322\cdot 10^{-03} & 7.9929\cdot 10^{-03} & 9.747\cdot 10^{-03} & 1.6571\cdot 10^{-01} \\
+   1.2284\cdot 10^{-02} & 1.0296\cdot 10^{-02} & 1.3589\cdot 10^{-02} & 2.1885\cdot 10^{-01} \\
+   1.0112\cdot 10^{-02} & 1.065\cdot 10^{-02} & 1.2499\cdot 10^{-02} & 2.2052\cdot 10^{-01} \\
+   3.9891\cdot 10^{-03} & 6.0496\cdot 10^{-03} & 7.716\cdot 10^{-03} & 1.3245\cdot 10^{-01} \\
+   3.6702\cdot 10^{-03} & 3.8727\cdot 10^{-03} & 4.8643\cdot 10^{-03} & 8.506\cdot 10^{-02} \\
+\end{pmatrix}
+\end{equation}
 
 
 

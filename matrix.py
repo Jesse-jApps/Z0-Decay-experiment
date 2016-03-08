@@ -50,11 +50,43 @@ print('data from experiment')
 print(np_array_to_latex(e,0))
 
 print("True events")
+ntrue = inv_matrix.dot(e.T).T
 print(inv_matrix.dot(e.T).T)
 print(np_array_to_latex(inv_matrix.dot(e.T).T,3))
 print("error")
-print(inv_err_mat.dot(e.T).T)
+dntrue = inv_err_mat.dot(e.T).T
+print(dntrue)
 print(np_array_to_latex(inv_err_mat.dot(e.T).T,3))
 
+fixes = np.array([
+    [0.09]*3+[2.0],
+    [0.2]*3+[4.3],
+    [0.36]*3+[7.7],
+    [0.52]*3+[10.8],
+    [0.22]*3+[4.7],
+    [-0.01]*3+[-0.2],
+    [-0.08]*3+[-1.6],
+], dtype=np.float32)
 
+print('fixes_latex')
+print(np_array_to_latex(fixes,2))
+print('L')
+lumi_errs = [[4.249604],[5.691792],[4.454466],[16.43293],[4.848926],[4.276552],[6.104764]]
+lumi = [[463.979], [667.5236], [486.7642], [2246.568], [535.908], [450.6], [709.698]]
+print(np_array_to_latex(lumi,4))
+print('ERROR')
+print(np_array_to_latex(lumi_errs))
+lumis = np.array([a*4 for a in lumi], dtype=np.float32)
+sigma = e/lumis+fixes
+print('sigma')
+print(sigma)
+print(np_array_to_latex(sigma,5))
+
+dsigma = np.empty_like(sigma)
+for i in range(0,7):
+    for j in range(0,4):
+        dsigma[i][j] = np.sqrt((1.0/lumi[i][0]*dntrue[i][j])**2+(-ntrue[i][j]/(lumi[i][0])**2*lumi_errs[i][0])**2)
+
+print('dsigma')
+print(np_array_to_latex(dsigma,4))
 
