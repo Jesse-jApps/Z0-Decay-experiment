@@ -171,11 +171,78 @@ Based on equation (2.18)
 \end{tabular}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4]{forward_backward_symmetry}
+	\includegraphics[scale=0.6]{forward_backward_symmetry}
 	\caption{Forward-Bckward asymmetry}
 	\label{fig:for-back-asy}
 \end{figure}
 
+\section{Analyzing Data}
+
+\subsection{Pure Events}
+For the $e^+, e^-$ detection we have to apply a cut for the $-0.71 \leq \cos(\theta) \leq 0.65$ and  $-0.925 \leq \cos(\theta) \leq -0.85$ due to a problem in the detector.
+\newline
+
+\subsubsection{Z->$e^+, e^-$}
+\begin{itemize}  
+\item All energy in Ecal
+\item None in Hcal
+\item 2 charged traces
+\item Momentum of charged traces around $Z_M$
+\end{itemize}
+
+\subsubsection{Z->$\mu^+, \mu^-$}
+\begin{itemize}  
+\item None in Ecal
+\item Very little in Hcal
+\item 2 charged traces
+\item Momentum of charged traces around $Z_M$
+\item For $\cos(\theta) leq -0.7$ and $\cos(\theta) geq 0.7$ the slope for differential cross-section is not as expected. Thus cut it.
+\end{itemize}
+
+\subsubsection{Z->$\tau^+, \tau^-$}
+asd
+
+\subsection{Seperating t-channel for $e^+ e^-$}
+We are looking for a cut to remove all t-channel events. Therefore we define
+\begin{equation}
+\frac{T}{T+S} \leq 0.05
+\end{equation}
+where  $T=a(1-\cos{\theta})^{-2}$  and $S=b(1+\cos^2{\theta})$. And write
+
+
+\begin{equation}
+\frac{dN}{d\cos\theta} = \frac{a}{(1-\cos\theta)^2}+b(1+\cos^2\theta)
+\end{equation}
+Integrate $\cos\theta$
+\begin{equation}
+\int dN = \frac{a}{1-\cos\theta} + b\left(\cos\theta+\frac{1}{3}\cos^3\theta\right)
+\end{equation}
+We obtain detector errors outside $cos\theta \in [-0.7,0.7]$. To solve the equation for a and b we create 2 equations by split around $\cos\theta=0$.
+\begin{equation}
+\begin{split}
+11786 &= a(\frac{1}{1-0.7}-1)+b(0,7+\frac{1}{3}0.7^3) \\
+9620 &= a(1-\frac{1}{1+0.7})+b(0,7+\frac{1}{3}0.7^3) \\
+\end{split}
+\end{equation}
+So we get
+\begin{equation}
+\begin{split}
+11786 &= (2+\frac{1}{3})a+0,813433b \\
+9620 &= 0,4117647a+ 0,813433b \\
+\end{split}
+\end{equation}
+So $a=1127,2$ and $b=9155,857$.
+We want $\frac{T}{T+S} \leq 0.05$ so we need to solve 
+\begin{equation}
+\frac{a}{(1-\cos\theta)^2}\frac{1}{\frac{a}{(1-\cos\theta)^2}+b(1+\cos^2\theta))} \leq 0.05 \iff \cos\theta \leq -0.188342
+\end{equation}
+
+To get true number of s-channel events we now integrate over the whole interval 
+\begin{equation}
+N_s = b\int_{-1}^1 d\cos\theta (1+\cos^2\theta) = \frac{8}{3}b = 24413
+\end{equation}
+
+\subsection{}
 
 
 \pagebreak
