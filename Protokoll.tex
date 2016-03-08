@@ -242,7 +242,91 @@ To get true number of s-channel events we now integrate over the whole interval
 N_s = b\int_{-1}^1 d\cos\theta (1+\cos^2\theta) = \frac{8}{3}b = 24413
 \end{equation}
 
-\subsection{}
+\subsection{Create efficiency matrix}
+We create efficiency matrix where each element is given by 
+\begin{equation}
+\epsilon = \frac{N_{cut}}{N_{true}}
+\end{equation}
+Thus performing the cuts to data set XX we could create the following matrix
+\begin{equation}
+\epsilon=\begin{pmatrix}
+   2.86\cdot 10^{-01} & 1.0\cdot 10^{-05} & 0 & 0 \\
+   0 & 9.18\cdot 10^{-01} & 5.77\cdot 10^{-03} & 0 \\
+   3.03\cdot 10^{-03} & 9.13\cdot 10^{-03} & 7.93\cdot 10^{-01} & 4.05\cdot 10^{-03} \\
+   1.02\cdot 10^{-03} & 0 & 1.2\cdot 10^{-02} & 9.95\cdot 10^{-01} \\
+\end{pmatrix}
+\end{equation}
+To find filter background and find $N_{true}$ we need to solve the following equation
+\begin{equation}
+N_{obs} = \epsilon N_{true}
+\end{equation}
+Multiply left side with inverse efficiency matrix we get
+\begin{equation}
+\epsilon^{-1} N_{obs} = N_{true}
+\end{equation}
+with inverse efficiency matrix
+\begin{equation}
+\epsilon^{-1}=\begin{pmatrix}
+   3.5 & -3.81\cdot 10^{-05} & 2.77\cdot 10^{-07} & -1.13\cdot 10^{-09} \\
+   8.39\cdot 10^{-05} & 1.09 & -7.92\cdot 10^{-03} & 3.23\cdot 10^{-05} \\
+   -1.33\cdot 10^{-02} & -1.25\cdot 10^{-02} & 1.26 & -5.13\cdot 10^{-03} \\
+   -3.43\cdot 10^{-03} & 1.51\cdot 10^{-04} & -1.52\cdot 10^{-02} & 1.01 \\
+\end{pmatrix}
+\end{equation}
+The error of efficiency matrix is given by
+\begin{equation}
+\Delta \epsilon = \sqrt{\frac{\epsilon(1-\epsilon)}{N}}
+\end{equation}
+Using $\epsilon\Delta\epsilon^{-1}+\Delta\epsilon\epsilon^{-1}=0$ we get error for inverse efficiency matrix:
+\begin{equation}
+\Delta\epsilon^{-1} = -\epsilon^{-1}\Delta\epsilon\epsilon^{-1} = \begin{pmatrix}
+   -3.55 \cdot 10^{-02} & 4.24 \cdot 10^{-07} & 1.08 \cdot 10^{-08} & -9.96 \cdot 10^{-11} \\
+   1.43 \cdot 10^{-05} & -1.06 \cdot 10^{-03} & -3.9 \cdot 10^{-04} & 3.18 \cdot 10^{-06} \\
+   -1.6 \cdot 10^{-03} & -3.78 \cdot 10^{-04} & -2.21 \cdot 10^{-03} & -2.43 \cdot 10^{-04} \\
+   -6.42 \cdot 10^{-04} & 9.57 \cdot 10^{-06} & -4.77 \cdot 10^{-04} & -1.97 \cdot 10^{-04} \\
+\end{pmatrix}
+\end{equation}
+
+Apply the filters we used within monte carlo simulation we could find the total number of observed events for each $\sqrt{s} \in \{...\}$:
+\begin{equation}
+N_{obs}=\begin{pmatrix}
+   2.0\cdot 10^{+01} & 9.0\cdot 10^{+01} & 1.0\cdot 10^{+02} & 2.0\cdot 10^{+03} \\
+   8.0\cdot 10^{+01} & 3.0\cdot 10^{+02} & 3.0\cdot 10^{+02} & 7.0\cdot 10^{+03} \\
+   9.0\cdot 10^{+01} & 4.0\cdot 10^{+02} & 3.0\cdot 10^{+02} & 9.0\cdot 10^{+03} \\
+   6.0\cdot 10^{+02} & 3.0\cdot 10^{+03} & 2.0\cdot 10^{+03} & 7.0\cdot 10^{+04} \\
+   1.0\cdot 10^{+02} & 6.0\cdot 10^{+02} & 5.0\cdot 10^{+02} & 1.0\cdot 10^{+04} \\
+   4.0\cdot 10^{+01} & 3.0\cdot 10^{+02} & 3.0\cdot 10^{+02} & 6.0\cdot 10^{+03} \\
+   6.0\cdot 10^{+01} & 3.0\cdot 10^{+02} & 3.0\cdot 10^{+02} & 7.0\cdot 10^{+03} \\
+\end{pmatrix}
+\end{equation}
+Thus we get using inverse efficiency matrix
+\begin{equation}
+N_{true} = (\epsilon^{-1}N_{obs}^T)^T = \begin{pmatrix}
+   6.995\cdot 10^{+01} & 1.006\cdot 10^{+02} & 1.08\cdot 10^{+02} & 2.512\cdot 10^{+03} \\
+   2.833\cdot 10^{+02} & 3.053\cdot 10^{+02} & 2.966\cdot 10^{+02} & 6.682\cdot 10^{+03} \\
+   3.183\cdot 10^{+02} & 4.214\cdot 10^{+02} & 3.838\cdot 10^{+02} & 8.812\cdot 10^{+03} \\
+   2.207\cdot 10^{+03} & 3.12\cdot 10^{+03} & 2.635\cdot 10^{+03} & 6.718\cdot 10^{+04} \\
+   3.987\cdot 10^{+02} & 6.252\cdot 10^{+02} & 5.346\cdot 10^{+02} & 1.306\cdot 10^{+04} \\
+   1.294\cdot 10^{+02} & 2.847\cdot 10^{+02} & 2.805\cdot 10^{+02} & 6.287\cdot 10^{+03} \\
+   1.959\cdot 10^{+02} & 3.163\cdot 10^{+02} & 2.812\cdot 10^{+02} & 7.016\cdot 10^{+03} \\
+\end{pmatrix}
+\end{equation}
+with error of 
+\begin{equation}
+\Delta N_{true} = \begin{pmatrix}
+   -7.095\cdot 10^{-01} & -1.284\cdot 10^{-01} & -8.901\cdot 10^{-01} & -5.511\cdot 10^{-01} \\
+   -2.873 & -3.809\cdot 10^{-01} & -2.443 & -1.487 \\
+   -3.228 & -5.185\cdot 10^{-01} & -3.19 & -1.948 \\
+   -2.238\cdot 10^{+01} & -3.771 & -2.367\cdot 10^{+01} & -1.47\cdot 10^{+01} \\
+   -4.044 & -7.586\cdot 10^{-01} & -4.633 & -2.861 \\
+   -1.313 & -3.568\cdot 10^{-01} & -2.236 & -1.375 \\
+   -1.987 & -3.866\cdot 10^{-01} & -2.463 & -1.531 \\
+\end{pmatrix}
+\end{equation}
+
+
+
+
 
 
 \pagebreak
