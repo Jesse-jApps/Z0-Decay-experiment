@@ -90,7 +90,7 @@ lumis = np.array([a*4 for a in lumi], dtype=np.float32)
 
 
 monte_carlo_corrections = [
-    [4.0961279303,    1.060006996, 1.2627697592,    1.0152181196] for x in range(7)
+    [1.1145911123,    1.060006996, 1.2627697592,    1.0152181196] for x in range(7)
 ]
 #sigma = e/lumis+fixes
 
@@ -137,7 +137,7 @@ def p_width(peak, gz, ge, mz):
     return (peak*gz**2*mz**2)/(12*np.pi*ge)
 
 
-
+print(p_width(0.00004022, 2.576, 0.083, 91.21))
 
 
 

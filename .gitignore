@@ -10,6 +10,8 @@ opengl_plot_prototype/
 *.xml
 *.gz
 *.tox
+*.pdf
+.~lock.data.ods#
 
 # C extensions
 *.so
