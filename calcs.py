@@ -97,8 +97,8 @@ s = 91.225**2
 #s = 89.225**2
 #s = 93.225**2
 
-s_range = np.arange(93, 93.5, 0.225)
-w_range = np.arange(0.20, 0.26, 0.01)
+s_range = np.arange(88, 94, 0.1)
+w_range = np.arange(0.20, 0.26, 0.001)
 
 
 result = np.zeros((len(w_range), len(s_range)), dtype=np.float32)

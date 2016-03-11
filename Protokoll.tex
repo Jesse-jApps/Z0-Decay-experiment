@@ -19,11 +19,13 @@
 \usepackage{flafter}  
 \usepackage[style=numeric]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
+\usepackage{feynmp-auto}
 \bibliography{literatur}
 \usepackage{bbm}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
+
 
 \lstset{frame=tb,
   language=C,
@@ -54,7 +56,7 @@
 
 
 
-\title{Protocol}
+\title{Protocol on $Z^0$-decay}
 
 \author{Nicolas Heimann}
 \affil{nicolas.heimann@studium.uni-hamburg.de}
@@ -66,28 +68,85 @@
 \begin{titlepage}
 \maketitle
 \thispagestyle{empty}
-\end{titlepage}
-\pagebreak
 \abstract{
 An abstract...
 }
+\end{titlepage}
+
+
+
 \tableofcontents
 \pagebreak
-\section {Introcution}
+\section {Introduction}
+In this experiment we analyse existing data about the $Z^0$-decay after a $e^-e^+$ collision. Based on Monte-Carlo simulated data and theoretical considerations we define parameter cuts to define different decay channels for the $Z^0$-boson. Applied to a real dataset obtained from the OPAL experiment at CERN we determine cross-section, partial width for different decay channels, as well as the weinberg-angle and compare the results to theoretical values. 
+
+\section{Theory}
+The process we are interested is $e^-e^+ \rightarrow f\bar f$. By the Standardmodel this is possible by an exchange of either photon or $Z^0$. Figure \ref{fig:feynman-low} shows the lowest order of Feynman diagrams.
+
+\begin{figure}[H]
+	\vspace{1cm}
+	\centering
+
+
+\begin{fmffile}{diagram}
+
+  \begin{fmfgraph*}(100,60)
+\fmfleft{i1,i2}
+\fmfright{o1,o2}
+\fmflabel{$e^-$}{i1}
+\fmflabel{$e^+$}{i2}
+\fmflabel{$\bar f$}{o1}
+\fmflabel{$f$}{o2}
+
+\fmf{vanilla}{i1,v1,i2}
+\fmf{vanilla}{o1,v2,o2}
+\fmf{photon,label=$\gamma,,Z^0$}{v1,v2}
+    
+  \end{fmfgraph*}
+\hspace{2cm}
+    \begin{fmfgraph*}(80,50)
+    
+    
+\fmfleft{i1,o1}
+\fmfright{i2,o2}
+
+
+\fmflabel{$e^-$}{i1}
+\fmflabel{$e^-$}{i2}
+\fmflabel{$e^+$}{o1}
+\fmflabel{$e^+$}{o2}
+
+\fmf{vanilla}{i1,v1,i2}
+\fmf{vanilla}{o1,v2,o2}
+\fmf{photon,label=$\gamma,,Z^0$}{v1,v2}
+
+    
+  \end{fmfgraph*}
+
+\end{fmffile}
+	\vspace{1cm}
+	\caption{Lowest order Feynman diagrams for $e^-e^+ \rightarrow f\bar f$. Left: S-channel. Right: T-channel, $Z^0$ is possible but very unlikely due to the low masses of the elektron and the high mass of the $Z^0$.}
+	\label{fig:feynman-low}
+\end{figure}
+At $\sqrt{s}=M_{Z^0}$ the probability that $Z^0$ is the propagator for the scattering process is much higher than for the photon.
+
+\subsection{Corrections}
+Additional Feynman diagrams have to be taken into account to evaluate the actual properties of the $Z^0$. Thus Bremstrahlung (photon emitted by the elektron before the collision) will shift the $Z_0$ resonance to a higher energy.
+
 
 \section{Identifying events}
-Quantities for events:
-\newline
-Ctrk(Sump): Energy of charged traces
-\newline
-Ctrk(N): Number of charged traces 
-\newline
-Ecal(SumE): Energy in electronic-kalorimeter
-\newline
-Hcal(SumE): Energy in hadronic-kalorimeter
+Based on the theory we can calculate the following properties for the different decay channels.
 
 \subsection{Decay width and cross-section}
-Using equation (2.12) we calculate following decay width of the Z-boson into fermions and (2.14) for cross-section at peak.
+Using\footnote{equation 2.12 page 18 experiment folder}
+\begin{equation}
+\Gamma_f = \frac{N^f_c \sqrt{2}}{12 \pi} G_F M_Z^3(g_V^{f2} + g_A^{f2})
+\end{equation}
+we calculate the decay width and\footnote{equation 2.14 page 18 experiment folder}
+\begin{equation}
+\sigma^{peak}_f= \frac{12 \pi}{M_Z^2} \frac{\Gamma_e}{\Gamma_Z}\frac{\gamma_f}{\Gamma_Z}
+\end{equation}
+the cross-section at peak of the Z-boson into fermions\footnote{$\Gamma_{lept}$ is the decay channels without neutrinos}.
 
 \begin{tabular}{ |p{3cm}||p{3cm}|  }
  \hline
@@ -102,7 +161,7 @@ Using equation (2.12) we calculate following decay width of the Z-boson into fer
   \hline
   $\Gamma_Z $   & 2502.7 MeV   \\
   $\Gamma_{hadr} $   & 1747.3 MeV   \\
-  $\Gamma_{lept}\footnote{Without neutrinos} $   & 257.8  MeV   \\
+  $\Gamma_{lept} $   & 257.8  MeV   \\
   $\Gamma_{neutr} $   & 497.6  MeV   \\
  \hline
  \hline
@@ -116,6 +175,7 @@ Using equation (2.12) we calculate following decay width of the Z-boson into fer
 \end{tabular}
 
 \subsection{Estimating change of $Z^0$ decay width for additional channels}
+If we take additional decay channels into account, thus assuming more lepton and quark generations we calculate the following increase of the decay width.
 
 \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|  }
  \hline
@@ -131,18 +191,25 @@ Using equation (2.12) we calculate following decay width of the Z-boson into fer
 \end{tabular}
 
 \subsection{Differential cross-section}
+As mentioned above we also have to take the t-channel decay into account. For the differential cross-section the following proportionalities differentiate between the channels
+\newline
+S-channel: $\frac{d\sigma}{d\Omega} \propto 1 + \cos^2{\Theta}$ (for big $\Theta$)
+\newline
+T-channel: $\frac{d\sigma}{d\Omega} \propto (1 - \cos{\Theta})^{-2}$ (for small $\Theta$)
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4]{differential-cross-section}
-	\caption{Differential cross-section on $\Theta$ qualitatively. Red: t-channel, violet: s-channel, blue: s-channel + t-channel}
+	\hspace{3cm}
+	\includegraphics[scale=0.4]{cross-section-diff}
+	
+	\caption{Differential cross-section on $\Theta$ (left), differential cross-section on $\cos{\Theta}$ (right) qualitatively. Red: t-channel, violet: s-channel, blue: s-channel + t-channel. Right: }
 	\label{fig:diff-cross-section}
 \end{figure}
-For s-channel: $\frac{d\sigma}{d\Omega} \propto 1 + \cos^2{\Theta}$ (for big $Theta$)
-\newline
-For t-channel: $\frac{d\sigma}{d\Omega} \propto (1 - \cos{\Theta})^{-2}$ (for small $Theta$)
+For the $e^-e^+ \rightarrow e^-e^+$ we have to evaluate events in the area $-1 \leq \cos{\Theta} \leq 0$, since we are only interested in the $Z^0$ as propagator. In section 4 we will make a better estimation to distinguish s from t-channel.
 
 \subsection{Forward-Backward Asymmetry}
-Based on equation (2.18)
+Based the equation\footnote{equation 2.18 page 19 experiment folder} for the forward-backward asymmetry, we calculate the following factors
+
 \begin{tabular}{ |p{3cm}||p{2cm}|p{2cm}|p{2cm}|  }
  \hline
  \multicolumn{4}{|c|}{Forward-Bckward asymmetry} \\
@@ -154,40 +221,54 @@ Based on equation (2.18)
    93.225 GeV & 0.515 & 0.480 & 0.284  \\
   \hline
 \end{tabular}
+
+If we plot the forward-backward asymmetry against $\sin^2(\theta_W)$ and $\sqrt{s}$, we get a distribution as in figure \ref{fig:for-back-asy}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{forward_backward_symmetry}
-	\caption{Forward-Bckward asymmetry}
+	\caption{Forward-Backward asymmetry}
 	\label{fig:for-back-asy}
 \end{figure}
 
-\section{Analyzing Data}
+\section{Analyzing data}
+We now use simulated data for specific events to find parameter cuts. With those cuts we will then be able to identify the decay channels for a set of real data.
 
-\subsection{Pure Events}
-For the $e^+, e^-$ detection we have to apply a cut for the $-0.71 \leq \cos(\theta) \leq 0.65$ and  $-0.925 \leq \cos(\theta) \leq -0.85$ due to a problem in the detector.
+\subsection{Monte-Carlo data}
+Using the monte-carlo data we define the following cuts\footnote{x defines either the lowest or highest possible value} to distinguish different event types.
+
+\begin{tabular}{ |p{4cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
+ \hline
+ CUT & e & $\tau$ & $\mu$ & q \\
+ \hline
+ ECAL lower & 85 & 0 & 8 & 15 \\
+ ECAL upper & 100 & 30 & 75 & x \\
+ HCAL lower & x & 0 & x & x \\
+ HCAL upper & x & 20 & x & x \\
+ PCHARGED lower & x & 70 & 8 & x \\
+ PCHARGED upper & x & x & 58 & x \\
+ N lower & x & x & 2 & 7 \\
+ N upper & x & 4 & 7 &x \\
+ $\cos\theta_1$ lower & -0,7 & x & x & x \\
+ $\cos\theta_1$ upper & -0,188342 & x & x & x \\
+ $\cos\theta_2$ lower & x & x & x & x \\
+ $\cos\theta_2$ upper & x & x & x & x \\
+ \hline
+\end{tabular}
 \newline
-
-\subsubsection{Z->$e^+, e^-$}
-\begin{itemize}  
-\item All energy in Ecal
-\item None in Hcal
-\item 2 charged traces
-\item Momentum of charged traces around $Z_M$
-\end{itemize}
-
-\subsubsection{Z->$\mu^+, \mu^-$}
-\begin{itemize}  
-\item None in Ecal
-\item Very little in Hcal
-\item 2 charged traces
-\item Momentum of charged traces around $Z_M$
-\item For $\cos(\theta) leq -0.7$ and $\cos(\theta) geq 0.7$ the slope for differential cross-section is not as expected. Thus cut it.
-\end{itemize}
-
-\subsubsection{Z->$\tau^+, \tau^-$}
-
-\subsection{Seperating t-channel for $e^+ e^-$}
-We want to find $\cos\theta$ so that we filter many t-channel events:
+ECAL: Energy in electronic-kalorimeter
+\newline
+HCAL: Energy in hadronic-kalorimeter
+\newline
+PCHARGED: Momentum of all charged traces
+\newline
+N: Number of charged traces
+\newline
+$\theta$: Angle of distribution along the z-axis
+\newline
+\newline
+Thereby we already separated the s from the t-channel based on the following calculation
+\newline
+We want to find $\cos\theta$ so that we filter most t-channel events:
 \begin{equation}
 \frac{T}{T+S} \leq 0.05
 \label{eq:cond}
@@ -209,44 +290,48 @@ We obtain detector errors outside $cos\theta \in [-0.7,0.7]$. Therefore the inte
 \end{split}
 \end{equation}
 With the power of basic linear algebra we get $a=1127,2$ and $b=9155,857$.
-We can now compute the True number of events in s-channel:
+We can now compute the true number of events in s-channel:
 \begin{equation}
 N_s = b\int_{-1}^1 d\cos\theta (1+\cos^2\theta) = \frac{8}{3}b = 24413
 \end{equation}
-While we have for the total number of electron events $N_ee=$
-
 Insert a and b into condition (\ref{eq:cond}) we get a upper boundary for $\cos\theta$
 \begin{equation}
 \frac{a}{(1-\cos\theta)^2}\frac{1}{\frac{a}{(1-\cos\theta)^2}+b(1+\cos^2\theta))} \leq 0.05 \iff \cos\theta \leq -0.188342
 \end{equation}
-Finally we will work with the following setup of cuts:
+For the given cuts we find the the following number of events
+\newline
 \newline
 \begin{tabular}{ |p{3cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
  \hline
- CUT & e & $\tau$ & $\mu$ & q \\
+ Type / Events & e & $\tau$ & $\mu$ & q \\
  \hline
- ECAL lower & 85 & 0 & 8 & 15 \\
- ECAL upper & 100 & 30 & 75 & x \\
- HCAL lower & x & 0 & x & x \\
- HCAL upper & x & 20 & x & x \\
- PCHARGED lower & x & 70 & 8 & x \\
- PCHARGED upper & x & x & 58 & x \\
- N lower & x & x & 2 & 7 \\
- N upper & x & 4 & 7 &x- \\
- $\cos\theta_1$ lower & -0,7 & x & x & x \\
- $\cos\theta_1$ upper & -0,188342 & x & x & x \\
- $\cos\theta_2$ lower & x & x & x & x \\
- $\cos\theta_2$ upper & x & x & x & x \\
+  ELECTRON & 6980 & 1 & 0 & 0 \\
+  MUON & 0 & 86598 & 457 & 0 \\
+  TAU & 286 & 723 & 62832 & 399 \\
+  HADRONS & 25 & 0 & 949 & 97980 \\
  \hline
 \end{tabular}
-\newpage
-
-\subsection{Create efficiency matrix}
-We create efficiency matrix $\epsilon$ where each element is defined as 
+\newline
+\newline
+If no filter applied we get the following event ratios based on the fact that each set of simulated data has 100000 events. 
+\newline
+\newline
+\begin{tabular}{ |p{3cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
+ \hline
+ Events & e & $\tau$ & $\mu$ & q \\
+ \hline
+ \hline
+  TOTAL & 89719 & 94339 & 79191 & 98501 \\
+  \hline
+  RATIO & 1,115 & 1,06 & 1,263 & 1,015 \\
+ \hline
+\end{tabular}
+\newline
+\newline
+Now we can calculate the efficiency matrix $\epsilon$, where each element is defined as 
 \begin{equation}
-\epsilon = \frac{N_{cut}}{N_{true}}
+\epsilon_{i,j} = \frac{N_{cut}}{N_{true}}
 \end{equation}
-Thus apply the cuts which we found with help of monte carlo data on data-set 4 we find the following efficiency matrix.
 \begin{equation}
 \epsilon=\begin{pmatrix}
    2.86\cdot 10^{-01} & 1.0\cdot 10^{-05} & 0 & 0 \\
@@ -255,11 +340,7 @@ Thus apply the cuts which we found with help of monte carlo data on data-set 4 w
    1.02\cdot 10^{-03} & 0 & 1.2\cdot 10^{-02} & 9.95\cdot 10^{-01} \\
 \end{pmatrix}
 \end{equation}
-This allows us to filter background from data $N_{obs}$ so we get real events $N_{true}$
-\begin{equation}
-\epsilon^{-1} N_{obs} = N_{true}
-\end{equation}
-with inverse efficiency matrix
+With $N_{true} = \epsilon^{-1} N_{obs}$ we are now able to obtain the true number of events.
 \begin{equation}
 \epsilon^{-1}=\begin{pmatrix}
    3.5 & -3.81\cdot 10^{-05} & 2.77\cdot 10^{-07} & -1.13\cdot 10^{-09} \\
@@ -267,13 +348,16 @@ with inverse efficiency matrix
    -1.33\cdot 10^{-02} & -1.25\cdot 10^{-02} & 1.26 & -5.13\cdot 10^{-03} \\
    -3.43\cdot 10^{-03} & 1.51\cdot 10^{-04} & -1.52\cdot 10^{-02} & 1.01 \\
 \end{pmatrix}
-\label{eq:eff-inv}
 \end{equation}
-The error of efficiency matrix is given by
+The uncertainty matrix can be calculated using
 \begin{equation}
 \Delta \epsilon = \sqrt{\frac{\epsilon(1-\epsilon)}{N}}
 \end{equation}
-Using $\epsilon\Delta\epsilon^{-1}+\Delta\epsilon\epsilon^{-1}=0$ we get error for inverse efficiency matrix:
+and with
+\begin{equation}
+\epsilon\Delta\epsilon^{-1}+\Delta\epsilon\epsilon^{-1}=0
+\end{equation}
+we get the uncertainty matrix for $\epsilon^-1$
 \begin{equation}
 \Delta\epsilon^{-1} = -\epsilon^{-1}\Delta\epsilon\epsilon^{-1} = \begin{pmatrix}
    -3.55 \cdot 10^{-02} & 4.24 \cdot 10^{-07} & 1.08 \cdot 10^{-08} & -9.96 \cdot 10^{-11} \\
@@ -282,6 +366,20 @@ Using $\epsilon\Delta\epsilon^{-1}+\Delta\epsilon\epsilon^{-1}=0$ we get error f
    -6.42 \cdot 10^{-04} & 9.57 \cdot 10^{-06} & -4.77 \cdot 10^{-04} & -1.97 \cdot 10^{-04} \\
 \end{pmatrix}
 \end{equation}
+
+\subsection{OPAL data}
+Now we apply above cuts to dataset 4 from the OPAL experiment.
+
+\subsection{Pure Events}
+For the $e^+, e^-$ detection we have to apply a cut for the $-0.71 \leq \cos(\theta) \leq 0.65$ and  $-0.925 \leq \cos(\theta) \leq -0.85$ due to a problem in the detector.
+\newline
+
+
+
+
+
+
+
 \subsection{Dataset4}
 Apply the cuts we used within monte carlo simulation we could find the total number of observed events for each $\sqrt{s} \in \{88.47939, 89.46793, 90.22266, 91.22430, 91.96648, 92.96465, 93.71712\}$:
 \begin{equation}
