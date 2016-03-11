@@ -148,38 +148,100 @@ determine partial width
 def p_width(peak, gz, ge, mz):
     return (peak*gz**2*mz**2)/(12*np.pi*ge)
 
-
 def p_width_e(peak, gz, mz):
     return np.sqrt((peak*gz**2*mz**2)/(12*np.pi))
 
 
+
+def gz_error_e(error, peak, mz):
+    return np.sqrt(peak/(12*np.pi))*mz*error
+
+def mz_error_e(error, peak, gz):
+    return np.sqrt(peak/(12*np.pi))*gz*error
+
+def peak_error_e(error, mz, gz, peak):
+    return (gz*mz*np.sqrt(peak/(12*np.pi)))/(2*peak)*error
+
+
+
+def gz_error(error, peak, gz, mz, ge):
+    return (peak*gz*mz**2)/(6*np.pi*ge)*error
+
+def mz_error(error, peak, gz, mz, ge):
+    return (peak*gz**2*mz)/(6*np.pi*ge)*error
+
+def peak_error(error, peak, gz, mz, ge):
+    return (gz**2*mz**2)/(12*np.pi*ge)*error
+
+
+Z_mass = [90.97, 91.18, 91.21, 91.13]
+Z_mass_error = [0.0048, 0.004858, 0.003, 0.00669]
+
+print("Z mass %f" % np.mean(Z_mass))
+print("Z mass error %f" % (np.sqrt(np.sum(np.square(Z_mass_error)))))
+
+
 mb_factor = 2.57
 e_peak = 0.000001735
-print(mb_factor*e_peak)
-print("electron width: %f" % p_width_e(mb_factor*e_peak, 2.098, 90.97))
-print("obviously there is a problem!!! gammaZ is too small and e_peak also!")
+e_peak_error = 0.00000001165
+e_gz = 2.098
+e_gz_error = 0.012
+e_mz = 90.97
+e_mz_error = 0.00481
+
+gamma_e_m = p_width_e(mb_factor*e_peak, e_gz, e_mz)
+print("electron width: %f" % gamma_e_m)
+e_width_error = np.sqrt(gz_error_e(e_gz_error, mb_factor*e_peak, e_mz)**2 + mz_error_e(e_mz_error, mb_factor*e_peak, e_gz)**2 + peak_error_e(mb_factor*e_peak_error, e_mz, e_gz, mb_factor*e_peak)**2)
+print("electron width error: %f" % e_width_error)
+
 
 ##continue with litaerture value
 gamma_e = 0.0838
-
+#gamma_e = gamma_e_m
 
 m_peak = 0.000001836 #(+/- 0.00903)
+m_peak_error = 0.00000000903
+m_gz = 2.398
+m_gz_error = 0.01142
+m_mz = 91.18
+m_mz_error = 0.004858
 
-muon_width = p_width(m_peak*mb_factor, 2.398, gamma_e, 91.18)
+muon_width = p_width(m_peak*mb_factor, m_gz, gamma_e, m_mz)
 print("muon: %f" % muon_width)
+m_width_error = np.sqrt(gz_error(m_gz_error, mb_factor*m_peak, m_gz, m_mz, gamma_e)**2 + mz_error(m_mz_error, mb_factor*m_peak, m_gz, m_mz, gamma_e)**2 + peak_error(m_peak_error, mb_factor*m_peak, m_gz, m_mz, gamma_e)**2)
+print("muon width error: %f" % m_width_error)
 
 t_peak = 0.000001612
-tau_width = p_width(m_peak*mb_factor, 2.516, gamma_e, 91.13)
+t_peak_error = 0.00000001087
+t_gz = 2.516
+t_gz_error = 0.01656
+t_mz = 91.13
+t_mz_error = 0.006693
+
+tau_width = p_width(m_peak*mb_factor, t_gz, gamma_e, t_mz)
 print("tau: %f" % tau_width)
+t_width_error = np.sqrt(gz_error(t_gz_error, mb_factor*t_peak, t_gz, t_mz, gamma_e)**2 + mz_error(t_mz_error, mb_factor*t_peak, t_gz, t_mz, gamma_e)**2 + peak_error(t_peak_error, mb_factor*t_peak, t_gz, t_mz, gamma_e)**2)
+print("tau width error: %f" % t_width_error)
+
 
 l_peak = 0.000004702
 leptons_width = p_width(l_peak*mb_factor, 2.372, gamma_e, 91.11)
 print("leptons: %f" % leptons_width)
 
+leptons_width = gamma_e_m + tau_width + muon_width
+leptons_width_error = np.sqrt(e_width_error**2 + t_width_error**2 + m_width_error**2)
 
 q_peak = 0.00004022
-hadrons_width = p_width(q_peak*mb_factor, 2.576, gamma_e, 91.21)
+q_peak_error = 0.0000001821
+q_gz = 2.576
+q_gz_error = 0.008535
+q_mz = 91.21
+q_mz_error = 0.003095
+
+hadrons_width = p_width(q_peak*mb_factor, q_gz, gamma_e, q_mz)
 print("quark: %f" % hadrons_width)
+q_width_error = np.sqrt(gz_error(q_gz_error, mb_factor*q_peak, q_gz, q_mz, gamma_e)**2 + mz_error(q_mz_error, mb_factor*q_peak, q_gz, q_mz, gamma_e)**2 + peak_error(q_peak_error, mb_factor*q_peak, q_gz, q_mz, gamma_e)**2)
+print("quark width error: %f" % q_width_error)
 
 
 
@@ -221,29 +283,39 @@ print(sin_2_weinberg(a_fb_opal))
 
 
 # cross section ratios
-total_cross_section_measured = l_peak + q_peak
+total_cross_section_measured = e_peak + m_peak + t_peak + q_peak
 
-print("Leptonic cross section %.4f" % (l_peak / total_cross_section_measured*100))
+print("Leptonic cross section %.4f" % ((e_peak + m_peak + t_peak) / total_cross_section_measured*100))
 print("Hadronic cross section %.4f" % (q_peak / total_cross_section_measured*100))
 
 
 # if we compare the width of leptons and hadrons we enc up with
 z_width_measured = (hadrons_width + leptons_width)
 print("Total width of hardrons and leptons %.4f" % z_width_measured)
-g_z_fit = [2.398, 2.516, 2.576] # excluded electron
+z_width_measured_error = np.sqrt(q_width_error**2 + leptons_width_error**2)
+print("With an error of %.4f" % z_width_measured_error)
+
+g_z_fit = [m_gz, t_gz, q_gz] # excluded electron
+
 z_width_theoretical = 2.5027 # calculated by us
 z_width_theoretical = (3*83.8+299*2+378*3+3*167.6) / 1000.0 # from the mappe
 z_width_theoretical = np.mean(g_z_fit) # from our measuerment
+z_width_theoretical_error = np.sqrt(t_gz_error**2 + m_gz_error**2 + q_gz_error**2)
+
 neutrino_width_deficiet = z_width_theoretical - z_width_measured
-print("Missing %.4f to get to theoretical value of %f" % (neutrino_width_deficiet, z_width_theoretical))
+print("Missing %.4f +/- %f to get to theoretical value of %f +/- %f" % (neutrino_width_deficiet, np.sqrt(z_width_theoretical_error**2 + z_width_measured_error**2), z_width_theoretical, z_width_theoretical_error))
 print("Split by 3 we end up with %f" % (neutrino_width_deficiet/3.0))
-neutrino_width_theo = 0.1676
+neutrino_width_theo = 0.1659
 print("Or we split by %f and get %f families" % (neutrino_width_theo, neutrino_width_deficiet/neutrino_width_theo))
 
 
-g_z_errors = [0.008535, 0.01656, 0.01142]
+
 gz_std = np.std(g_z_fit)
-print("Errors: %f" % (np.sqrt(g_z_errors[0]**2 + g_z_errors[1]**2 + g_z_errors[2]**2 + gz_std**2)/0.167))
+print("Errors: %f" % (np.sqrt(np.sqrt(z_width_theoretical_error**2 + z_width_measured_error**2)**2 + gz_std**2)/neutrino_width_theo))
+
+lept_univ = [65.6, 71.405, 78.519]
+
+print("lept univ %f +/- %f" % (np.mean(lept_univ), np.std(lept_univ)))
 
 
 

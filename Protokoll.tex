@@ -144,7 +144,8 @@ Using\footnote{equation 2.12 page 18 experiment folder}
 \end{equation}
 we calculate the decay width and\footnote{equation 2.14 page 18 experiment folder}
 \begin{equation}
-\sigma^{peak}_f= \frac{12 \pi}{M_Z^2} \frac{\Gamma_e}{\Gamma_Z}\frac{\gamma_f}{\Gamma_Z}
+\sigma^{peak}_f= \frac{12 \pi}{M_Z^2} \frac{\Gamma_e}{\Gamma_Z}\frac{\Gamma_f}{\Gamma_Z}
+\label{eq:214}
 \end{equation}
 the cross-section at peak of the Z-boson into fermions\footnote{$\Gamma_{lept}$ is the decay channels without neutrinos}.
 
@@ -172,6 +173,7 @@ the cross-section at peak of the Z-boson into fermions\footnote{$\Gamma_{lept}$ 
   $\sigma_{u, c} $   & 18.76 $KeV^{-2}$   \\
   $\sigma_{d,s,c} $   & 23.73 $KeV^{-2}$   \\
  \hline
+ \label{tbl:theo-width}
 \end{tabular}
 
 \subsection{Estimating change of $Z^0$ decay width for additional channels}
@@ -235,7 +237,8 @@ We now use simulated data for specific events to find parameter cuts. With those
 
 \subsection{Monte-Carlo data}
 Using the monte-carlo data we define the following cuts\footnote{x defines either the lowest or highest possible value} to distinguish different event types.
-
+\newline
+\newline
 \begin{tabular}{ |p{4cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
  \hline
  CUT & e & $\tau$ & $\mu$ & q \\
@@ -254,6 +257,7 @@ Using the monte-carlo data we define the following cuts\footnote{x defines eithe
  $\cos\theta_2$ upper & x & x & x & x \\
  \hline
 \end{tabular}
+\newline
 \newline
 ECAL: Energy in electronic-kalorimeter
 \newline
@@ -365,23 +369,13 @@ we get the uncertainty matrix for $\epsilon^-1$
    -1.6 \cdot 10^{-03} & -3.78 \cdot 10^{-04} & -2.21 \cdot 10^{-03} & -2.43 \cdot 10^{-04} \\
    -6.42 \cdot 10^{-04} & 9.57 \cdot 10^{-06} & -4.77 \cdot 10^{-04} & -1.97 \cdot 10^{-04} \\
 \end{pmatrix}
+\label{eq:eff-inv}
 \end{equation}
 
 \subsection{OPAL data}
-Now we apply above cuts to dataset 4 from the OPAL experiment.
-
-\subsection{Pure Events}
-For the $e^+, e^-$ detection we have to apply a cut for the $-0.71 \leq \cos(\theta) \leq 0.65$ and  $-0.925 \leq \cos(\theta) \leq -0.85$ due to a problem in the detector.
+Now we apply above cuts to dataset 4 from the OPAL experiment for different energies 
 \newline
-
-
-
-
-
-
-
-\subsection{Dataset4}
-Apply the cuts we used within monte carlo simulation we could find the total number of observed events for each $\sqrt{s} \in \{88.47939, 89.46793, 90.22266, 91.22430, 91.96648, 92.96465, 93.71712\}$:
+$\sqrt{s} \in \{88.47939, 89.46793, 90.22266, 91.22430, 91.96648, 92.96465, 93.71712\}$ and list the observed events
 \begin{equation}
 N_{obs}=\begin{pmatrix}
    2.0\cdot 10^{+01} & 9.0\cdot 10^{+01} & 1.0\cdot 10^{+02} & 2.0\cdot 10^{+03} \\
@@ -393,8 +387,8 @@ N_{obs}=\begin{pmatrix}
    6.0\cdot 10^{+01} & 3.0\cdot 10^{+02} & 3.0\cdot 10^{+02} & 7.0\cdot 10^{+03} \\
 \end{pmatrix}
 \end{equation}
-Where each roch represents one CMS-energy.
-Using the inverse efficiency matrix (\ref{eq:eff-inv}) we get true number of events
+where each row represents one CMS-energy.
+Using the inverse efficiency matrix (\ref{eq:eff-inv}) we get the true number of events
 \begin{equation}
 N_{true} = (\epsilon^{-1}N_{obs}^T)^T = \begin{pmatrix}
    6.995\cdot 10^{+01} & 1.006\cdot 10^{+02} & 1.08\cdot 10^{+02} & 2.512\cdot 10^{+03} \\
@@ -418,12 +412,13 @@ with error of
    -1.987 & -3.866\cdot 10^{-01} & -2.463 & -1.531 \\
 \end{pmatrix}
 \end{equation}
-Next we calculate crossection by using equation (S-3.3):
+\subsubsection{Cross-section}
+Next we calculate cross-section by using equation (S-3.3):
 \begin{equation}
 \frac{dN}{dt} = \mathcal{L}\sigma
 \label{eq:cs}
 \end{equation}
-Using the following matrix for Strahlungskorrektur from table 5.5
+We use the following matrix as radiative corrections\footnote{table 5.5 page 41 experiment folder}
 \begin{equation}
 \Lambda = \begin{pmatrix}
    9.0\cdot 10^{-02} & 9.0\cdot 10^{-02} & 9.0\cdot 10^{-02} & 2.0 \\
@@ -435,7 +430,7 @@ Using the following matrix for Strahlungskorrektur from table 5.5
    -8.0\cdot 10^{-02} & -8.0\cdot 10^{-02} & -8.0\cdot 10^{-02} & -1.6 \\
 \end{pmatrix}
 \end{equation}
-And the following Luminosities given by table 5.6:
+and the following Luminosities\footnote{ table 5.6 page 42 experiment folder}
 \begin{equation}
 \mathcal{L}dt = \begin{pmatrix}
    4.6398\cdot 10^{+02} \\
@@ -447,25 +442,26 @@ And the following Luminosities given by table 5.6:
    7.097\cdot 10^{+02} \\
 \end{pmatrix}
 \end{equation}
-Also we include monte carlo correction factor
+We include as well the monte carlo correction factor
 \begin{equation}
 \mathcal{M} = \begin{pmatrix}
-  4.0961279303 \\
-  1.060006996 \\
-  1.2627697592 \\
-  1.0152181196
+  1,115 \\
+   1,06 \\
+    1,263 \\
+     1,015 
 \end{pmatrix}
 \end{equation}
-So calculate the crossection for each element $\sigma_{ij} = \mathcal{M}_{j}N_{true,ij}/(\mathcal{L}dt)_i+\Lambda_{ij}$:
+So we calculate the cross-section for each element $\sigma_{ij} = \mathcal{M}_{j}N_{true,ij}/(\mathcal{L}dt)_i+\Lambda_{ij}$:
 \begin{equation}
-\sigma = \begin{pmatrix}
-   2.66565\cdot 10^{-01} & 3.02468\cdot 10^{-01} & 3.53996\cdot 10^{-01} & 7.47017 \\
-   6.97041\cdot 10^{-01} & 6.47807\cdot 10^{-01} & 7.03198\cdot 10^{-01} & 1.44138\cdot 10^{+01} \\
-   1.12577 & 1.20711 & 1.255 & 2.59911\cdot 10^{+01} \\
-   1.67049 & 1.87841 & 1.86789 & 4.10152\cdot 10^{+01} \\
-   1.09134 & 1.36129 & 1.36046 & 2.93176\cdot 10^{+01} \\
-   3.26344\cdot 10^{-01} & 6.0869\cdot 10^{-01} & 6.93407\cdot 10^{-01} & 1.38972\cdot 10^{+01} \\
-   2.43212\cdot 10^{-01} & 3.56132\cdot 10^{-01} & 3.73723\cdot 10^{-01} & 8.3877 \\
+\sigma = 
+\begin{pmatrix}
+   2.58034\cdot 10^{-01} & 3.19911\cdot 10^{-01} & 3.83957\cdot 10^{-01} & 7.49626 \\
+   6.7303\cdot 10^{-01} & 6.84879\cdot 10^{-01} & 7.61002\cdot 10^{-01} & 1.44617\cdot 10^{+01} \\
+   1.08877 & 1.27758 & 1.35562 & 2.60781\cdot 10^{+01} \\
+   1.6149 & 1.99203 & 2.00115 & 4.11605\cdot 10^{+01} \\
+   1.04923 & 1.45666 & 1.4798 & 2.94355\cdot 10^{+01} \\
+   3.10084\cdot 10^{-01} & 6.59851\cdot 10^{-01} & 7.76052\cdot 10^{-01} & 1.39643\cdot 10^{+01} \\
+   2.27593\cdot 10^{-01} & 3.9248\cdot 10^{-01} & 4.20331\cdot 10^{-01} & 8.43569 \\
 \end{pmatrix}
 \end{equation}
 The error of cross section in eq (\ref{eq:cs}) is given by
@@ -488,7 +484,8 @@ Where the error of $\mathcal{L}dt$ is given by
 \end{equation}
 Finally we get
 \begin{equation}
-\Delta\sigma=\begin{pmatrix}
+\Delta\sigma=
+\begin{pmatrix}
    2.0603\cdot 10^{-03} & 2.0057\cdot 10^{-03} & 2.8681\cdot 10^{-03} & 4.96\cdot 10^{-02} \\
    5.6236\cdot 10^{-03} & 3.9419\cdot 10^{-03} & 5.2671\cdot 10^{-03} & 8.5376\cdot 10^{-02} \\
    8.9322\cdot 10^{-03} & 7.9929\cdot 10^{-03} & 9.747\cdot 10^{-03} & 1.6571\cdot 10^{-01} \\
@@ -498,37 +495,102 @@ Finally we get
    3.6702\cdot 10^{-03} & 3.8727\cdot 10^{-03} & 4.8643\cdot 10^{-03} & 8.506\cdot 10^{-02} \\
 \end{pmatrix}
 \end{equation}
-If we addup first three columns of the matrix we get:
-\begin{equation}
-\sigma=
-\begin{pmatrix}
-   7.2261\cdot 10^{-01} & 7.3882 \\
-   1.5423 & 1.4262\cdot 10^{+01} \\
-   2.7749 & 2.5717\cdot 10^{+01} \\
-   4.1898 & 4.0562\cdot 10^{+01} \\
-   2.8525 & 2.8949\cdot 10^{+01} \\
-   1.1928 & 1.3686\cdot 10^{+01} \\
-   6.0966\cdot 10^{-01} & 8.238 \\
-\end{pmatrix}
-\end{equation}
-with an error of
-\begin{equation}
-\Delta\sigma=
-\begin{pmatrix}
-   6.9341\cdot 10^{-03} & 4.96\cdot 10^{-02} \\
-   1.4833\cdot 10^{-02} & 8.5376\cdot 10^{-02} \\
-   2.6672\cdot 10^{-02} & 1.6571\cdot 10^{-01} \\
-   3.6169\cdot 10^{-02} & 2.1885\cdot 10^{-01} \\
-   3.3262\cdot 10^{-02} & 2.2052\cdot 10^{-01} \\
-   1.7755\cdot 10^{-02} & 1.3245\cdot 10^{-01} \\
-   1.2407\cdot 10^{-02} & 8.506\cdot 10^{-02} \\
-\end{pmatrix}
-\end{equation}
-Where we used that $\Delta\sum_i a_i=\sqrt{\sum a_i^2}$, while $a_i$ are the partial errors.
 
+\subsubsection{Fitting the data}
+By fitting the data with a Breit-Wigner distribution we can obtain the following properties. Figure \ref{fig:cross-bw} shows the data of the cross-sections.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{z-ee}
+	\includegraphics[scale=0.25]{z-mm}
+	\includegraphics[scale=0.25]{z-tt}
+	\includegraphics[scale=0.25]{z-qq}
+	\caption{Cross-sections for different decay channels fitted with Breit-Wigner distribution.}
+	\label{fig:cross-bw}
+\end{figure}
+With this data we can determine the mass of the $Z^0$ at $M_Z=91.12 \pm 0.01 GeV$.
+We calculate the decay width using
+\begin{equation}
+\Gamma_e = \sqrt{\frac{\sigma^{peak}_e \Gamma_Z^2 M_Z^2}{12 \pi}}
+\end{equation}
+for the $e^-e^+$ decay width and
+\begin{equation}
+\Gamma_f = \frac{\sigma^{peak}_e \Gamma_Z^2 M_Z^2}{12 \pi \Gamma_e}
+\end{equation}
+for all fermions.
+The results are
+\newline
+\newline
+\begin{tabular}{ |p{3cm}||p{5cm}|  }
+ \hline
+ \multicolumn{2}{|c|}{Decay width for different channels} \\
+ \hline
+ Channel & Decay width \\
+ \hline
+  $\Gamma_e $   & 65.6 MeV $\pm$ 0.4 MeV \\
+  $\Gamma_{\mu} $   & 71.4 MeV $\pm$ 0.7 MeV  \\
+  $\Gamma_{\tau} $   & 78.5 MeV $\pm$ 0.9 MeV  \\
+  $\Gamma_{hadr} $   & 1806 MeV $\pm$ 12 MeV \\
+  \hline
+\end{tabular}
+\newline
+\newline
+\subsubsection{Lepton universality}
+Due to the lepton universality we expect to have for tau, muon and electron the same decay width at high energy. While the decay widths are close, it is still in a range of roughly 13 MeV. This can't be seen as a prove for lepton universality.
 
-\section{Lepton universality}
-At high energy equal rights of all families <=> same total cross section
+\subsubsection{Neutrinos}
+We end up measuring roughly 11\% leptonic and 89\% hadronic decay.
+We calculate a total of decay width of 2.0218 GeV $\pm$ 12 MeV. While measuring a decay width for the $Z^0$ of $\Gamma_Z=2.497$ GeV $\pm$ 22 MeV.
+Therefor we are missing $\Gamma_{3\nu}=475$ MeV $\pm$ 25 MeV. If we split $\Gamma_{\nu}$ by the in \ref{tbl:theo-width} calculated value $\Gamma_{\nu}=165.9$ MeV we arrive at 2.86 $\pm$ 0.47 neutrino families.
+
+\subsubsection{Forward-Backward asymmetry}
+By measuring the angular distribution in z-axis we can calculate the weinberg angle. We therefor calculate the forward-backward asymmetry for the muon decay channel.
+\newline
+\newline
+\begin{tabular}{ |p{5cm}||p{3cm}|p{3cm}|  }
+ \hline
+ \multicolumn{3}{|c|}{Observed events} \\
+ \hline
+ Channel & $\cos{\theta} < 0 $ & $\cos{\theta} > 0 $ \\
+ \hline
+ \hline
+  MONT-CARLO MUON & 44700 & 49639 \\
+  \hline
+  OPAL ELECTRON & 631 & 0 \\
+  OPAL MUON & 1363 & 1516 \\
+  OPAL ELECTRON & 517 & 1881 \\
+  \hline
+\end{tabular}
+\newline
+\newline
+Using the efficiency matrix and applying the monte-carlo correction we calculate the true events
+\newline
+\newline
+\begin{tabular}{ |p{5cm}||p{3cm}|p{3cm}|  }
+ \hline
+ \multicolumn{3}{|c|}{True events} \\
+ \hline
+ Channel & $\cos{\theta} < 0 $ & $\cos{\theta} > 0 $ \\
+ \hline
+ \hline
+  MONT-CARLO MUON & 43768 & 48603 \\
+  \hline
+  OPAL MUON & 1329 & 1487 \\
+  \hline
+\end{tabular}
+\newline
+\newline
+With
+\begin{equation}
+A_{fb} = \frac{N_{right} - N_{left}}{N_{right} + N_{left}}
+\end{equation}
+we calculate $A_{fb}=0.052$ for the monte-carlo data and $A_{fb}=0.0558$ for the opal data. Continuing with
+\begin{equation}
+\cos^2{\theta} = \frac{1 - \frac{\sqrt{A_{fb}}}{3}}{4}
+\end{equation}
+gives us $\cos^2{\theta} = 0.2309$ for the monte-carlo data and $\cos^2{\theta} = 0.2303$ for the opal data.
+
+\section{Conclusion}
+While the decay widths are quiet far from the theoretical values, the fact that the measured $\Gamma_{hadr}$ is too high and $\Gamma_{l}$ to low, the resulting number of neutrino families is in the right area.
 
 \pagebreak
 \nocite{*}
